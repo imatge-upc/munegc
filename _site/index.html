@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MUNEGC: 2D-3D Geometric Fusion Network using Multi-Neighbourhood Graph Convolution for RGB-D Indoor Scene Classification</title>
+	<meta name="keywords" content="computer vision, deep learning,graph neural network, convolution, 3d, point cloud, geometry">
+	<meta name="description" content="Project page for 2D-3D Geometric Fusion Network using Multi-Neighbourhood Graph Convolution for RGB-D Indoor Scene Classification">
+  <link rel="stylesheet" href="combo.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+</head>
+<body>
+  <div id="main">
+
+    <nav><ul>
+      
+        
+        <li class="p-authors"><a href="#authors">authors</a></li>
+      
+        
+        <li class="p-intro"><a href="#intro">introduction</a></li>
+      
+        
+        <li class="p-method"><a href="#method">Method</a></li>
+      
+        
+        <li class="p-results"><a href="#results">Results</a></li>
+      
+        
+        <li class="p-code"><a href="#code">code</a></li>
+      
+        
+        <li class="p-acks"><a href="#acks">acknowledgements</a></li>
+      
+    </ul></nav>
+
+
+    
+      
+      <div id="authors" class="section p-authors">
+        
+        <div class="container center">
+          <h2 class="text-purple">2D-3D Geometric Fusion Network using Multi-Neighbourhood Graph Convolution for RGB-D Indoor Scene Classification</h2>
+
+<div class="author">
+    <a href="https://www.albertmosellamontoro.com" target="_blank">
+      <div class="authorphoto"><img src="./assets/amm.jpg" /></div>
+      <div>Albert Mosella-Montoro</div>
+    </a>
+</div>
+<div class="author">
+    <a href="https://imatge.upc.edu/web/people/javier-ruiz-hidalgo" target="_blank">
+      <div class="authorphoto"><img src="./assets/jrh.jpg" /></div>
+      <div>Javier Ruiz-Hidalgo</div>
+    </a>
+</div>
+
+<p><span id="forkongithub">
+  <a href="https://github.com/imatge-upc/munegc" class="bg-blue">
+    Fork me on GitHub
+  </a>
+</span></p>
+
+<p><img src="https://imatge.upc.edu/web/sites/default/files/UPC-SIMBOL-positiu-p3005%20%281%29.png" alt="upc-logo" /></p>
+
+<h4>Universitat Politècnica de Catalunya</h4>
+
+
+        </div>
+      </div>
+    
+      
+      <div id="intro" class="section p-intro">
+        
+        <div class="subtlecircle sectiondivider faicon">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-quote-left fa-stack-1x"></i>
+          </span>
+          <h5 class="icon-title">introduction</h5>
+        </div>
+        
+        <div class="container ">
+          <div style="text-align: justify">
+Multi-modal fusion has been proved to help enhance the performance of scene classification tasks. This paper presents a 2D-3D Fusion stage that combines 3D Geometric Features with 2D Texture Features obtained by 2D Convolutional Neural Networks. To get a robust 3D Geometric embedding, a network that uses two novel layers is proposed. The first layer, Multi-Neighbourhood Graph Convolution, aims to learn a more robust geometric descriptor of the scene combining two different neighbourhoods: one in the Euclidean space and the other in the Feature space. The second proposed layer, Nearest Voxel Pooling, improves the performance of the well-known Voxel Pooling. Experimental results, using NYU-Depth-V2 and SUN RGB-D datasets, show that the proposed method outperforms the current state-of-the-art in RGB-D indoor scene classification task. 
+</div>
+<p>If you find this work useful, please consider citing:</p>
+
+<div class="highlight">
+	<pre class="highlight">
+	<code>Albert Mosella-Montoro, Javier Ruiz-Hidalgo, 2D-3D Geometric Fusion network using Multi-Neighbourhood Graph Convolution for RGB-D indoor scene classification, Information Fusion, 2021, ISSN 1566-2535, https://doi.org/10.1016/j.inffus.2021.05.002</code>
+	</pre>
+</div>
+
+<pre style="overflow:auto"> 
+@article{MOSELLAMONTORO2021,
+         title = {2D-3D Geometric Fusion network using Multi-Neighbourhood Graph Convolution for RGB-D indoor scene classification},
+         journal = {Information Fusion},
+         year = {2021},
+         issn = {1566-2535},
+         doi = {https://doi.org/10.1016/j.inffus.2021.05.002},
+         url = {https://www.sciencedirect.com/science/article/pii/S1566253521001032},
+         author = {Albert Mosella-Montoro and Javier Ruiz-Hidalgo},
+}
+</pre>
+
+<p>Check our paper <a href="https://www.sciencedirect.com/science/article/pii/S1566253521001032">here</a>.</p>
+
+        </div>
+      </div>
+    
+      
+      <div id="method" class="section p-method">
+        
+        <div class="subtlecircle sectiondivider faicon">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-cog fa-stack-1x"></i>
+          </span>
+          <h5 class="icon-title">Method</h5>
+        </div>
+        
+        <div class="container ">
+          <div style="text-align: justify">
+The proposed network is composed of two branches: the 3D Geometric branch and the 2D Texture branch. The 3D Geometric
+branch is composed of two novel layers named Multi-Neighbourhood Graph Convolution (MUNEGC) and Nearest Voxel Pooling. 
+The input of this branch is a 3D point cloud that can be obtained directly from a lidar sensor or using the 
+depth information and the intrinsic camera parameters of an RGB-D sensor. Each node of the 3D input point cloud encodes 
+the depth information using the HHA encoding. HHA encodes the depth into a 0 to 255 range with three channels. 
+Each channel represents horizontal disparity, height above the ground, and the angle with the inferred gravity direction. 
+The 2D Texture branch uses as a backbone the well-known architecture ResNet-18. The input of this branch is a 2D RGB image 
+corresponding to the same capture as the capture used on the 3D Geometric branch. 
+After the corresponding branches, the extracted 3D Geometric and 2D Texture features are fused using the 2D–3D Fusion stage, 
+and the result of this stage is used by the Classification network to predict the corresponding scene class. The
+proposed network is depicted in the following picture:<br /><br />
+</div>
+
+<div style="text-align: center"> 
+	<img src="./assets/arch.jpg" alt="arch" />
+</div>
+
+<p><br /><br /></p>
+
+<div style="text-align: justify">
+The main contributions of this paper are:
+<br /><br />
+
+<div>The proposal of the <strong>Multi-Neighbourhood Graph Convolution</strong> operation, that takes into consideration the neighbours
+of the centre point in Feature and Euclidean spaces.
+</div>
+
+<br /><br />
+
+<div style="text-align: center"> 
+	<img src="./assets/munegc.jpg" alt="munegc" />
+</div>
+
+<br /><br />
+
+<div>The <strong>Nearest Voxel Pooling</strong> algorithm, which consists of an improved version of the current Voxel Pooling algorithm
+  that mitigates the noise introduced by sensors.</div>
+
+<br /><br />
+
+<div>The fusion of 2D-3D multi-modal features through the proposed <strong>2D-3D Fusion stage</strong>. Using geometric proximity allows
+  the network to exploit the benefits of 2D and 3D Networks simultaneously.</div>
+
+<br /><br />
+
+<div style="text-align: center"> 
+   <img src="./assets/2d3dfusion.jpg" alt="2d3dfusion" />
+</div>
+
+</div>
+
+
+        </div>
+      </div>
+    
+      
+      <div id="results" class="section p-results">
+        
+        <div class="subtlecircle sectiondivider faicon">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-line-chart fa-stack-1x"></i>
+          </span>
+          <h5 class="icon-title">Results</h5>
+        </div>
+        
+        <div class="container center">
+          <style type="text/css">
+.align-left {
+    text-align: left;
+}
+
+th.rowsep-1:after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    display: block;
+    margin: 0 4px;
+}
+table.greyGridTable {
+  border: 2px solid #FFFFFF;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.greyGridTable td, table.greyGridTable th {
+  border: 0px solid #FFFFFF;
+  padding: 3px 4px;
+}
+table.greyGridTable thead {
+  background: #FFFFFF;
+  border-bottom: 4px solid #333333;
+}
+table.greyGridTable thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333333;
+  text-align: left;
+}
+table.greyGridTable tfoot td {
+  font-size: 14px;
+}
+</style>
+
+<table class="greyGridTable">
+<caption> <h3><strong>Results on SUN RGB-D Dataset</strong></h3></caption>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:left;" colspan="3">Mean Acc(%)</th>
+</tr>
+
+<tr>
+<th>Method</th>
+<th>RGB</th>
+<th>Geometric</th>
+<th>Fusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-modal fusion</td>
+<td>40.4</td>
+<td>36.5</td>
+<td>41.5</td>
+</tr>
+<tr>
+<td>Effective RGB-D representations</td>
+<td>44.6</td>
+<td>42.7</td>
+<td>53.8</td>
+</tr>
+<tr>
+<td>DF&sup2;Net</td>
+<td>46.3</td>
+<td>39.2</td>
+<td>54.6</td>
+</tr>
+<tr>
+<td>MapNet</td>
+<td>-</td>
+<td>-</td>
+<td>56.2</td>
+</tr>
+<tr>
+<td>TrecNet</td>
+<td>50.6</td>
+<td>47.9</td>
+<td>56.7</td>
+</tr>
+<tr>
+<td><strong>Ours</strong></td>
+<td><strong>56.4</strong></td>
+<td><strong>44.1</strong></td>
+<td><strong>58.6</strong></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<table class="greyGridTable">
+<caption> <h3><strong>Results on NYU-Depth-V2 Dataset</strong></h3></caption>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:left;" colspan="3">Mean Acc(%)</th>
+</tr>
+
+<tr>
+<th>Method</th>
+<th>RGB</th>
+<th>Geometric</th>
+<th>Fusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Effective RGB-D representations</td>
+<td>53.4</td>
+<td>56.4</td>
+<td>67.5</td>
+</tr>
+<tr>
+<td>DF&sup2;Net</td>
+<td>61.1</td>
+<td>54.8</td>
+<td>65.4</td>
+</tr>
+<tr>
+<td>MapNet</td>
+<td>-</td>
+<td>-</td>
+<td>67.7</td>
+</tr>
+<tr>
+<td>TrecNet</td>
+<td>64.8</td>
+<td>57.7</td>
+<td>69.2</td>
+</tr>
+<tr>
+<td><strong>Ours</strong></td>
+<td><strong>67.8</strong></td>
+<td><strong>59.2</strong></td>
+<td><strong>75.1</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+        </div>
+      </div>
+    
+      
+      <div id="code" class="section p-code">
+        
+        <div class="subtlecircle sectiondivider faicon">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-github fa-stack-1x"></i>
+          </span>
+          <h5 class="icon-title">code</h5>
+        </div>
+        
+        <div class="container center">
+          <div style="text-align: center">
+<img src="./assets/pytorch.png" alt="pytorch" style="margin-right: 10px" />
+<img src="./assets/pygeometric.png" alt="pygeometric" />
+</div>
+<p>We implement our method using <a href="https://pytorch.org/">Pytorch</a> and <a href="https://github.com/rusty1s/pytorch_geometric">Pytorch Geometric</a>.</p>
+
+<p>Find source code on <strong><a href="https://github.com/imatge-upc/munegc">here</a></strong>.</p>
+
+        </div>
+      </div>
+    
+      
+      <div id="acks" class="section p-acks">
+        
+        <div class="subtlecircle sectiondivider faicon">
+          <span class="fa-stack">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-thumbs-up fa-stack-1x"></i>
+          </span>
+          <h5 class="icon-title">acknowledgements</h5>
+        </div>
+        
+        <div class="container center">
+          <div style="text-align: justify; margin-top: 25px;">
+This research was supported by Secretary of Universities and Research of the Generalitat de Catalunya and the European
+Social Fund via a PhD grant to the first author (FI2018), and developed in the framework of project TEC2016-75976-R,
+financed by the Ministerio de Economía, Industria y Competitividad and the European Regional Development Fund (ERDF).
+</div>
+
+<div style="margin-top: 25px;">
+
+<img src="./assets/gencat.png" alt="gencat" style="width: 240px; margin: 10px" />
+<img src="./assets/fse.png" alt="fse" style="width: 240px; margin: 10px" />
+<img src="./assets/MEyC.png" alt="meyc" style="width: 120px; margin: 10px" />
+
+</div>
+
+
+        </div>
+      </div>
+    
+
+
+    <div id="footer" class="section text-white">
+      <div class="container">
+        
+        
+<p>Design by Tim O’Brien <a href="http://t413.com/">t413.com</a>
+—
+<a href="https://github.com/t413/SinglePaged">SinglePaged theme</a>
+—
+this site is <a href="https://github.com/imatge-upc/munegc">open source</a></p>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="site.js"></script>
+</html>

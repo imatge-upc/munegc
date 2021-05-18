@@ -1,0 +1,37 @@
+---
+
+port: 4000
+host: 0.0.0.0
+safe: false
+
+
+### site serving configuration ###
+exclude: [CNAME, README.md, .gitignore]
+permalink: /:title ## disables post output
+timezone: null
+lsi: false
+markdown: kramdown
+
+
+### content configuration ###
+title:       "MUNEGC: 2D-3D Geometric Fusion Network using Multi-Neighbourhood Graph Convolution for RGB-D Indoor Scene Classification"
+keywords:    "computer vision, deep learning,graph neural network, convolution, 3d, point cloud, geometry"
+description: "Project page for 2D-3D Geometric Fusion Network using Multi-Neighbourhood Graph Convolution for RGB-D Indoor Scene Classification"
+source_link: "https://github.com/imatge-upc/munegc"
+favicon:     "img/favicon.ico"
+touch_icon:  "img/apple-touch-icon.png"
+
+
+### template colors, used site-wide via css ###
+colors:
+  black:     '#111111'
+  white:     '#f8f8f8'
+  blue:      '#49a7e9'
+  green:     '#9bcf2f'
+  purple:    '#c869bf'
+  orange:    '#fab125'
+  turquoise: '#0fbfcf'
+
+kramdown:
+  auto_ids:  false
+

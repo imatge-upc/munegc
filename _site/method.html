@@ -1,0 +1,52 @@
+<div style="text-align: justify">
+The proposed network is composed of two branches: the 3D Geometric branch and the 2D Texture branch. The 3D Geometric
+branch is composed of two novel layers named Multi-Neighbourhood Graph Convolution (MUNEGC) and Nearest Voxel Pooling. 
+The input of this branch is a 3D point cloud that can be obtained directly from a lidar sensor or using the 
+depth information and the intrinsic camera parameters of an RGB-D sensor. Each node of the 3D input point cloud encodes 
+the depth information using the HHA encoding. HHA encodes the depth into a 0 to 255 range with three channels. 
+Each channel represents horizontal disparity, height above the ground, and the angle with the inferred gravity direction. 
+The 2D Texture branch uses as a backbone the well-known architecture ResNet-18. The input of this branch is a 2D RGB image 
+corresponding to the same capture as the capture used on the 3D Geometric branch. 
+After the corresponding branches, the extracted 3D Geometric and 2D Texture features are fused using the 2D–3D Fusion stage, 
+and the result of this stage is used by the Classification network to predict the corresponding scene class. The
+proposed network is depicted in the following picture:<br /><br />
+</div>
+
+<div style="text-align: center"> 
+	<img src="./assets/arch.jpg" alt="arch" />
+</div>
+
+<p><br /><br /></p>
+
+<div style="text-align: justify">
+The main contributions of this paper are:
+<br /><br />
+
+<div>The proposal of the <strong>Multi-Neighbourhood Graph Convolution</strong> operation, that takes into consideration the neighbours
+of the centre point in Feature and Euclidean spaces.
+</div>
+
+<br /><br />
+
+<div style="text-align: center"> 
+	<img src="./assets/munegc.jpg" alt="munegc" />
+</div>
+
+<br /><br />
+
+<div>The <strong>Nearest Voxel Pooling</strong> algorithm, which consists of an improved version of the current Voxel Pooling algorithm
+  that mitigates the noise introduced by sensors.</div>
+
+<br /><br />
+
+<div>The fusion of 2D-3D multi-modal features through the proposed <strong>2D-3D Fusion stage</strong>. Using geometric proximity allows
+  the network to exploit the benefits of 2D and 3D Networks simultaneously.</div>
+
+<br /><br />
+
+<div style="text-align: center"> 
+   <img src="./assets/2d3dfusion.jpg" alt="2d3dfusion" />
+</div>
+
+</div>
+
