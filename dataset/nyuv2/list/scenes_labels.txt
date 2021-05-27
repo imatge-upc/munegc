@@ -1,0 +1,10 @@
+bedroom
+kitchen
+living_room
+bathroom
+dining_room
+office
+home_office
+classroom
+bookstore
+others
